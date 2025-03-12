@@ -1,26 +1,50 @@
-# Python Weather Application
+# AWS FinOps Cost Optimization Script
 
-A simple Python weather application that fetches current weather data for any city using the **WeatherAPI**. This application allows users to input a city name and displays the weather information, such as temperature, humidity, wind speed, and more.
-
-## Features
-
-- Fetch current weather data for any city.
-- Display temperature, humidity, weather description, and wind speed.
-- Handle errors gracefully for invalid city names or connection issues.
-- Built using Python and the **requests** library to interact with WeatherAPI.
+This Python script automates the process of loading AWS Cost and Usage Report (CUR) data from an S3 bucket, analyzing it, and generating FinOps cost optimization recommendations.
 
 ## Prerequisites
 
-Before running this application, you need to have Python 3+ installed on your machine and the necessary libraries.
+Before running this script, ensure you have the following:
 
-- Python 3.x
-- `requests` library
+-   **Python 3.6+:** Python is required to execute the script.
+-   **Boto3:** The AWS SDK for Python, used to interact with AWS services. Install it using:
+    ```bash
+    pip install boto3
+    ```
+-   **Pandas:** A data manipulation library for Python, used to process the CUR data. Install it using:
+    ```bash
+    pip install pandas
+    ```
+-   **AWS Credentials:** Configure your AWS credentials with sufficient permissions to access the specified S3 bucket and retrieve the CUR file. You can configure credentials using the AWS CLI or environment variables.
+-   **AWS CUR Data in S3:** You must have an AWS CUR CSV file stored in an S3 bucket.
 
-## Setup Instructions
+## Setup Checklist
 
-### 1. Install Dependencies
+-   [ ] Install Python 3.6+
+-   [ ] Install Boto3: `pip install boto3`
+-   [ ] Install Pandas: `pip install pandas`
+-   [ ] Configure AWS Credentials
+-   [ ] Verify AWS CUR data exists in an S3 Bucket
 
-First, you need to install the required dependencies. You can do this by running:
+## Setup
+
+1.  **Clone the Repository (Optional):** If you have this code in a repository, clone it.
+
+2.  **Install Dependencies:** Install the required Python packages as mentioned in the prerequisites.
+
+3.  **Configure S3 Bucket and File:**
+    -   Open the `script.py` file.
+    -   Modify the following variables to match your S3 bucket and CUR file:
+        ```python
+        S3_BUCKET = "your-finops-data-bucket"
+        CSV_FILE = "your_aws_cur.csv"
+        ```
+    -   Replace `"your-finops-data-bucket"` with the name of your S3 bucket.
+    -   Replace `"your_aws_cur.csv"` with the name of your CUR CSV file.
+
+## Usage
+
+To run the script, execute the following command in your terminal:
 
 ```bash
-pip install requests
+python script.py

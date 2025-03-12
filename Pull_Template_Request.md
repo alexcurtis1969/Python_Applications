@@ -1,31 +1,41 @@
-# Pull Request Title
+# Pull Request Template
 
 ## Description
 
-### Summary of Changes
-- Briefly describe the purpose of this pull request (e.g., added new functionality, fixed bugs, refactored code).
-- Include any key changes made to the project.
-  
-### Related Issue(s)
-- Closes #issue_number (if applicable)
-- Links to relevant issues (e.g., bug fixes, feature additions)
+Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Refactor
-- [ ] Documentation
-- [ ] Tests
+Fixes #(issue number)
 
-## Checklist
+## Type of change
 
-- [ ] I have read the **CONTRIBUTING** guidelines.
-- [ ] My code follows the coding style of this project.
-- [ ] I have updated the documentation accordingly (if necessary).
-- [ ] I have added tests to cover my changes (if applicable).
-- [ ] All tests are passing and the code builds successfully.
-- [ ] I have checked my code for any security vulnerabilities.
+Please delete options that are not relevant.
 
-## Additional Notes
-- Any other context or information that the reviewer should know about this pull request (e.g., known issues, testing instructions, special configurations).
+-   [ ] Bug fix (non-breaking change which fixes an issue)
+-   [ ] New feature (non-breaking change which adds functionality)
+-   [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+-   [ ] This change requires a documentation update
 
+## How Has This Been Tested?
+
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
+
+-   [ ] Test A
+-   [ ] Test B
+
+**Test Configuration**:
+
+-   OS:
+-   Python Version:
+-   Boto3 Version:
+-   Pandas Version:
+
+## Checklist:
+
+-   [ ] My code follows the style guidelines of this project
+-   [ ] I have performed a self-review of my own code
+-   [ ] I have commented my code, particularly in hard-to-understand areas
+-   [ ] I have made corresponding changes to the documentation
+-   [ ] My changes generate no new warnings
+-   [ ] I have added tests that prove my fix is effective or that my feature works
+-   [ ] New and existing unit tests pass locally with my changes
+-   [ ] Any dependent changes have been merged and published in downstream modules.
