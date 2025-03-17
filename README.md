@@ -1,50 +1,55 @@
-# AWS FinOps Cost Optimization Script
+# Toll Booth Management System
 
-This Python script automates the process of loading AWS Cost and Usage Report (CUR) data from an S3 bucket, analyzing it, and generating FinOps cost optimization recommendations.
+This Python script simulates a basic toll booth management system. It allows you to process toll transactions, generate daily reports, and provides sample data generation for testing.
 
-## Prerequisites
+## Features
 
-Before running this script, ensure you have the following:
+* **Toll Processing:** Records vehicle IDs, vehicle types, timestamps, and toll amounts.
+* **Variable Toll Rates:** Supports varying toll rates based on vehicle type (extensible).
+* **Daily Reports:** Generates daily toll collection reports, including transaction details and total collected amounts.
+* **Sample Data Generation:** Creates random toll transactions for testing purposes.
+* **Historical Reporting:** Generate reports for past dates.
 
--   **Python 3.6+:** Python is required to execute the script.
--   **Boto3:** The AWS SDK for Python, used to interact with AWS services. Install it using:
+## Getting Started
+
+### Prerequisites
+
+* Python 3.6 or later
+
+### Usage
+
+1.  **Save the Code:** Save the Python code as `toll_booth.py`.
+2.  **Run the Script:** Execute the script from your terminal:
+
     ```bash
-    pip install boto3
+    python toll_booth.py
     ```
--   **Pandas:** A data manipulation library for Python, used to process the CUR data. Install it using:
-    ```bash
-    pip install pandas
-    ```
--   **AWS Credentials:** Configure your AWS credentials with sufficient permissions to access the specified S3 bucket and retrieve the CUR file. You can configure credentials using the AWS CLI or environment variables.
--   **AWS CUR Data in S3:** You must have an AWS CUR CSV file stored in an S3 bucket.
 
-## Setup Checklist
+3.  **Output:** The script will output the processed toll messages and daily toll reports to the console.
 
--   [ ] Install Python 3.6+
--   [ ] Install Boto3: `pip install boto3`
--   [ ] Install Pandas: `pip install pandas`
--   [ ] Configure AWS Credentials
--   [ ] Verify AWS CUR data exists in an S3 Bucket
+### Code Structure
 
-## Setup
+* **`TollBooth` Class:**
+    * `__init__(self, booth_id, toll_rate)`: Initializes a toll booth with an ID and toll rate.
+    * `process_toll(self, vehicle_id, vehicle_type, timestamp=None)`: Processes a toll transaction.
+    * `generate_daily_report(self, date=None)`: Generates a daily toll collection report.
+* **`generate_sample_data(booth, num_transactions=20)` Function:** Generates sample toll transactions for a given booth.
 
-1.  **Clone the Repository (Optional):** If you have this code in a repository, clone it.
+### Example
 
-2.  **Install Dependencies:** Install the required Python packages as mentioned in the prerequisites.
+```python
+# Create toll booths
+booth1 = TollBooth(booth_id="Booth A", toll_rate=5.00)
+booth2 = TollBooth(booth_id="Booth B", toll_rate=5.00)
 
-3.  **Configure S3 Bucket and File:**
-    -   Open the `script.py` file.
-    -   Modify the following variables to match your S3 bucket and CUR file:
-        ```python
-        S3_BUCKET = "your-finops-data-bucket"
-        CSV_FILE = "your_aws_cur.csv"
-        ```
-    -   Replace `"your-finops-data-bucket"` with the name of your S3 bucket.
-    -   Replace `"your_aws_cur.csv"` with the name of your CUR CSV file.
+# Generate sample data
+generate_sample_data(booth1, num_transactions=30)
+generate_sample_data(booth2, num_transactions=25)
 
-## Usage
+# Generate daily reports
+booth1.generate_daily_report()
+booth2.generate_daily_report()
 
-To run the script, execute the following command in your terminal:
-
-```bash
-python script.py
+# Generate a report for yesterday
+yesterday = datetime.date.today() - datetime.timedelta(days=1)
+booth1.generate_daily_report(date=yesterday)

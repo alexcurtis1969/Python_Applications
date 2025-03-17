@@ -1,41 +1,50 @@
-# Pull Request Template
+# Pull Request: Add Basic Toll Booth Management System
 
-## Description
+**Description:**
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
+This pull request introduces a basic toll booth management system implemented in Python. It includes a `TollBooth` class for processing toll transactions, generating daily reports, and a utility function for generating sample data.
 
-Fixes #(issue number)
+**Changes:**
 
-## Type of change
+* Added `TollBooth` class:
+    * Implements `__init__` for initializing toll booths with ID and rate.
+    * Implements `process_toll` for recording transactions.
+    * Implements `generate_daily_report` for generating daily summaries.
+* Added `generate_sample_data` function:
+    * Generates random toll transactions for testing.
+* Added example usage in the main section of the `toll_booth.py` script.
+* Added a `README.md` file with instructions, features, and further enhancements.
 
-Please delete options that are not relevant.
+**Motivation:**
 
--   [ ] Bug fix (non-breaking change which fixes an issue)
--   [ ] New feature (non-breaking change which adds functionality)
--   [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
--   [ ] This change requires a documentation update
+This system provides a foundational structure for managing toll transactions, which can be extended to include more advanced features like database integration, electronic toll collection, and real-time reporting.
 
-## How Has This Been Tested?
+**Testing:**
 
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration.
+* The included sample data generation and daily report generation functionality have been tested.
+* Manual inspection of the generated reports confirms accurate calculations.
 
--   [ ] Test A
--   [ ] Test B
+**Checklist:**
 
-**Test Configuration**:
+* [x] Code follows project coding standards.
+* [x] Code is properly documented.
+* [x] Changes are tested and working.
+* [x] `README.md` is updated with relevant information.
 
--   OS:
--   Python Version:
--   Boto3 Version:
--   Pandas Version:
+**Potential Improvements (Future PRs):**
 
-## Checklist:
+* Database integration for persistent storage of transactions.
+* Implementation of electronic toll collection (ETC) functionality.
+* Real-time reporting and dashboard features.
+* Addition of unit tests.
+* Addition of lane management.
+* Addition of time of day tolling.
+* Addition of vehicle specific tolling.
 
--   [ ] My code follows the style guidelines of this project
--   [ ] I have performed a self-review of my own code
--   [ ] I have commented my code, particularly in hard-to-understand areas
--   [ ] I have made corresponding changes to the documentation
--   [ ] My changes generate no new warnings
--   [ ] I have added tests that prove my fix is effective or that my feature works
--   [ ] New and existing unit tests pass locally with my changes
--   [ ] Any dependent changes have been merged and published in downstream modules.
+**Files Changed:**
+
+* `toll_booth.py`
+* `README.md`
+
+**Screenshots (if applicable):**
+(If you have any relevant screenshots of the output, include them here.)
