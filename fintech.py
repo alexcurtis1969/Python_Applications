@@ -13,6 +13,7 @@ def fetch_data(ticker):
 def calculate_technical_indicators(df):
     # Calculate the Rolling Standard Deviation (volatility measure)
     df['rolling_std'] = df['Close'].rolling(window=20).std()  # Using the last 20 days to calculate standard deviation
+    
     # Calculate Bollinger Bands
     df['UpperBand'] = df['Close'].rolling(window=20).mean() + (df['rolling_std'] * 2)  # Upper band is the average + 2 times the standard deviation
     df['LowerBand'] = df['Close'].rolling(window=20).mean() - (df['rolling_std'] * 2)  # Lower band is the average - 2 times the standard deviation
