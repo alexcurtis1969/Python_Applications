@@ -1,55 +1,25 @@
-# Toll Booth Management System
+# Fintech Market Data Analysis
 
-This Python script simulates a basic toll booth management system. It allows you to process toll transactions, generate daily reports, and provides sample data generation for testing.
+This project fetches historical stock and cryptocurrency data, calculates technical indicators (such as the Rolling Standard Deviation and Bollinger Bands), visualizes the data in charts, and generates a PDF report with the analysis results.
 
 ## Features
 
-* **Toll Processing:** Records vehicle IDs, vehicle types, timestamps, and toll amounts.
-* **Variable Toll Rates:** Supports varying toll rates based on vehicle type (extensible).
-* **Daily Reports:** Generates daily toll collection reports, including transaction details and total collected amounts.
-* **Sample Data Generation:** Creates random toll transactions for testing purposes.
-* **Historical Reporting:** Generate reports for past dates.
+- Fetch stock data from Yahoo Finance for various tickers (e.g., Apple, Microsoft, Google, Bitcoin, Ethereum).
+- Calculate technical indicators like Rolling Standard Deviation and Bollinger Bands.
+- Plot stock price along with Bollinger Bands.
+- Generate a PDF report summarizing the stock data and technical analysis.
+  
+## Requirements
 
-## Getting Started
+- Python 3.x
+- Libraries:
+  - `yfinance`: To fetch historical stock data from Yahoo Finance.
+  - `pandas`: For data manipulation.
+  - `numpy`: For numerical operations.
+  - `matplotlib`: For plotting charts.
+  - `fpdf`: To generate PDF reports.
 
-### Prerequisites
+You can install the necessary libraries by running:
 
-* Python 3.6 or later
-
-### Usage
-
-1.  **Save the Code:** Save the Python code as `toll_booth.py`.
-2.  **Run the Script:** Execute the script from your terminal:
-
-    ```bash
-    python toll_booth.py
-    ```
-
-3.  **Output:** The script will output the processed toll messages and daily toll reports to the console.
-
-### Code Structure
-
-* **`TollBooth` Class:**
-    * `__init__(self, booth_id, toll_rate)`: Initializes a toll booth with an ID and toll rate.
-    * `process_toll(self, vehicle_id, vehicle_type, timestamp=None)`: Processes a toll transaction.
-    * `generate_daily_report(self, date=None)`: Generates a daily toll collection report.
-* **`generate_sample_data(booth, num_transactions=20)` Function:** Generates sample toll transactions for a given booth.
-
-### Example
-
-```python
-# Create toll booths
-booth1 = TollBooth(booth_id="Booth A", toll_rate=5.00)
-booth2 = TollBooth(booth_id="Booth B", toll_rate=5.00)
-
-# Generate sample data
-generate_sample_data(booth1, num_transactions=30)
-generate_sample_data(booth2, num_transactions=25)
-
-# Generate daily reports
-booth1.generate_daily_report()
-booth2.generate_daily_report()
-
-# Generate a report for yesterday
-yesterday = datetime.date.today() - datetime.timedelta(days=1)
-booth1.generate_daily_report(date=yesterday)
+```bash
+pip install yfinance pandas numpy matplotlib fpdf
