@@ -1,49 +1,42 @@
-## Pull Request Template
+# Pull Request Template
 
-**Please provide a brief description of the changes in this pull request.**
+## Description
 
-[Provide a concise summary of what this PR does. What problem does it solve or what feature does it add?]
+Please include a summary of the change and which issue is resolved. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-**Related Issue(s) or Ticket(s):**
+Fixes #(issue number)
 
-* [Link to the relevant issue or ticket, if applicable. Use format: #ISSUE_NUMBER or URL]
+## Type of change
 
-**Changes Proposed:**
+-   [ ] Bug fix (non-breaking change which fixes an issue)
+-   [ ] New feature (non-breaking change which adds functionality)
+-   [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+-   [ ] This change requires a documentation update
+-   [ ] Code refactoring
+-   [ ] Improvement of existing feature
+-   [ ] Performance improvement
+-   [ ] Dependency update
+-   [ ] Other (please specify):
 
-* [List the specific changes made in this PR. Be as detailed as necessary.]
-* [Example: Fixed a bug in the data loading process.]
-* [Example: Added a new feature for calculating average claim amounts.]
-* [Example: Refactored the code for better readability.]
-* [Example: Updated the README.md with new usage instructions.]
+## How Has This Been Tested?
 
-**Screenshots (if applicable):**
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
 
-[If the changes include visual modifications, include screenshots or GIFs here.]
+-   [ ] Unit tests
+-   [ ] Integration tests
+-   [ ] Manual tests (please describe):
 
-**Testing Performed:**
+## Checklist:
 
-* [Describe the testing you have done to ensure the changes work as expected.]
-* [Example: Tested the script with various CSV files.]
-* [Example: Verified the new calculation produces the correct results.]
-* [Example: Ensured the PDF report is generated without errors.]
+-   [ ] My code follows the style guidelines of this project
+-   [ ] I have performed a self-review of my own code
+-   [ ] I have commented my code, particularly in hard-to-understand areas
+-   [ ] I have made corresponding changes to the documentation
+-   [ ] My changes generate no new warnings
+-   [ ] I have added tests that prove my fix is effective or that my feature works
+-   [ ] New and existing unit tests pass locally with my changes
+-   [ ] Any dependent changes have been merged and published in downstream modules.
 
-**Reviewers:**
+## Additional context
 
-* [Tag the individuals or teams who should review this pull request.]
-
-**Checklist:**
-
-* [ ] I have read the contribution guidelines.
-* [ ] My code follows the project's coding style and conventions.
-* [ ] I have added unit tests (if applicable).
-* [ ] I have updated the documentation (README.md, etc.) if necessary.
-* [ ] All existing tests pass.
-* [ ] My changes do not introduce any new warnings or errors.
-* [ ] I have considered the security implications of my changes.
-
-**Additional Notes:**
-
-
-
----
-
+Add any other context about the pull request here.

@@ -1,76 +1,117 @@
-# Claims Data Analysis Report
+# EC2 Cost Analysis Web Application
 
-This Python script, `revenue_mgmt.py`, is designed to analyze claims data from a CSV file (`claims_data.csv`) and generate a comprehensive PDF report. The report includes an overview of the data, key metrics, a table of high-billed claims, and a trend analysis graph showing the number of claims over the last year.
+This Flask-based web application analyzes EC2 cost data from a CSV file, generates visualizations, and stores both the analysis results and visualizations in an AWS S3 bucket.
 
 ## Features
 
-* **Data Loading:** Reads claims data from a CSV file.
-* **Data Overview:** Displays the first 10 rows of the dataset in a table within the PDF.
-* **Key Metrics Calculation:** Calculates and presents key performance indicators (KPIs) such as average payment rate by provider, total billed and paid amounts per provider, and average patient age by claim type.
-* **High-Billed Claims Identification:** Identifies and lists the top 5 claims with billed amounts exceeding a defined threshold.
-* **Trend Analysis:** Generates a monthly trend graph showing the number of claims over the past year.
-* **PDF Report Generation:** Creates a well-formatted PDF report (`claims_analysis.pdf`) using the ReportLab library.
+-   **Data Analysis:** Analyzes EC2 cost data to provide insights into costs, instance usage, and potential savings.
+-   **Visualization:** Generates visualizations using Matplotlib and Seaborn to display analysis results.
+-   **AWS S3 Integration:** Stores and retrieves analysis results and visualizations from an AWS S3 bucket.
+-   **Web Interface:** Provides a simple web interface for running the analysis and downloading results.
+-   **Password Protection:** Basic password protection for accessing the application.
 
 ## Prerequisites
 
-Before running the script, ensure you have the following installed:
+-   Python 3.6+
+-   AWS account with configured credentials
+-   `ec2_data.csv` file containing EC2 cost data
 
-* **Python:** Make sure you have Python 3.x installed on your system.
-* **pandas:** A powerful data analysis library for Python (`pip install pandas`).
-* **matplotlib:** A plotting library for Python (`pip install matplotlib`).
-* **ReportLab:** A library for creating PDF documents in Python (`pip install reportlab`).
+## Installation
 
-You will also need a CSV file named `claims_data.csv` in the same directory as the Python script. This file should contain your claims data with relevant columns (e.g., `Claim_Date`, `Billed_Amount`, `Paid_Amount`, `Insurance_Provider`, `Claim_Type`, `Patient_Age`).
-
-## How to Use
-
-1.  **Save the Script:** Save the provided Python code as `revenue_mgmt.py` in a directory of your choice.
-2.  **Prepare Data:** Ensure you have a CSV file named `claims_data.csv` in the same directory as the script, containing your claims data. Make sure the column headers in your CSV file match the expectations of the script (though the script is designed to be somewhat robust).
-3.  **Run the Script:** Open your terminal or command prompt, navigate to the directory where you saved `revenue_mgmt.py` and `claims_data.csv`, and run the script using the Python interpreter:
+1.  **Clone the repository:**
 
     ```bash
-    python revenue_mgmt.py
+    git clone <repository_url>
+    cd <repository_directory>
     ```
 
-4.  **View the Report:** Once the script finishes running, a PDF file named `claims_analysis.pdf` will be generated in the same directory. You can open this file with any PDF reader to view the claims data analysis report.
+2.  **Create a virtual environment (recommended):**
 
-## Configuration
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On macOS/Linux
+    venv\Scripts\activate  # On Windows
+    ```
 
-You can customize some parameters within the script:
+3.  **Install dependencies:**
 
-* `pdf_filename`: The name of the output PDF file (default: `'claims_analysis.pdf'`).
-* `high_bill_threshold`: The minimum billed amount to consider a claim as "high" (default: `4000`).
-* `trend_analysis_duration`: The number of days for the trend analysis (default: `365` days, or one year).
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-You can modify these values directly in the script's configuration section at the beginning of the file.
+4.  **Configure AWS Credentials:**
 
-## File Structure
+    Ensure you have configured your AWS credentials either through environment variables or the AWS CLI.
 
-The project consists of the following files:
+5.  **Place your `ec2_data.csv` file in the same directory as `app.py`.**
 
-* `revenue_mgmt.py`: The Python script for analyzing claims data and generating the report.
-* `claims_data.csv`: (Expected) The CSV file containing the claims data.
-* `claims_analysis.pdf`: (Generated) The PDF report containing the analysis.
-* `claims_over_time_1year.png`: (Generated) The image file of the claims trend graph.
+6.  **Set the password:**
 
-## Troubleshooting
+    Modify the `PASSWORD_HASH` and `SALT` variables in `app.py` with your desired password.
 
-* **`claims_data.csv` Not Found:** Ensure that the `claims_data.csv` file is in the same directory as the `revenue_mgmt.py` script.
-* **Missing Libraries:** If you encounter `ModuleNotFoundError`, make sure you have installed the required libraries using `pip install` as mentioned in the Prerequisites section.
-* **Incorrect Data Format:** If the script throws errors during data processing, check the format and column names in your `claims_data.csv` file.
-* **PDF Not Generated:** Verify that the script runs without any errors in the terminal output. Check file permissions in the directory where the script is located.
+    ```python
+    import hashlib
+    import secrets
 
-## Further Enhancements
+    PASSWORD_HASH = hashlib.sha256("your_strong_password".encode()).hexdigest()
+    SALT = secrets.token_hex(16)
+    PASSWORD_HASH = hashlib.sha256((PASSWORD_HASH + SALT).encode()).hexdigest()
+    ```
 
-* Implement more sophisticated data visualizations.
-* Add more detailed analysis and metrics.
-* Allow for user-defined date ranges for analysis.
-* Improve error handling and reporting.
+## Usage
+
+1.  **Run the Flask application:**
+
+    ```bash
+    python app.py
+    ```
+
+2.  **Access the application in your web browser:**
+
+    Open your browser and navigate to `http://127.0.0.1:5000/`.
+
+3.  **Login:**
+
+    Enter the password you set in `app.py`.
+
+4.  **Run the analysis:**
+
+    Click the link or navigate to `http://127.0.0.1:5000/run_analysis` to start the analysis.
+
+5.  **Download results:**
+
+    Click the download link or navigate to `http://127.0.0.1:5000/download` to download the analysis results as a CSV file.
+
+6.  **View visualizations:**
+
+    The visualizations will be uploaded to the S3 bucket. You can access them through the web interface (if implemented) or directly from your S3 bucket.
+
+## AWS S3 Configuration
+
+-   The application creates an S3 bucket named `alexas-ec2-cost-analysis-bucket` in the `us-east-1` region (or the specified region).
+-   The analysis results are stored in the bucket as `ec2_analysis.csv`.
+-   Visualizations are stored in the `visualizations/` folder within the bucket.
+
+## Dependencies
+
+-   Flask
+-   Pandas
+-   Matplotlib
+-   Seaborn
+-   Boto3
+-   Requests
+
+## Notes
+
+-   Ensure your AWS credentials have the necessary permissions to create and access S3 buckets.
+-   The application uses basic password protection. For production environments, consider using more robust authentication and authorization mechanisms.
+-   The application assumes the `ec2_data.csv` file has specific column names. If your data has different column names, you may need to modify the analysis functions.
+-   The visualisations are saved to the local directory, and then uploaded to S3. They are not served directly from the local machine.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues for bugs or feature requests.
 
 ## License
 
-N/A
-
----
-
-**Thank you for using the Claims Data Analysis Report script!**
+This project is licensed under the MIT License.
