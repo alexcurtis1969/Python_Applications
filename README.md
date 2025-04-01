@@ -1,117 +1,90 @@
-# EC2 Cost Analysis Web Application
+# Kroger Sales Analysis Dashboard
 
-This Flask-based web application analyzes EC2 cost data from a CSV file, generates visualizations, and stores both the analysis results and visualizations in an AWS S3 bucket.
+This project generates and displays sales analysis visualizations for Kroger stores, including:
 
-## Features
+* **Average Sales Amount per Store:** Bar chart showing the average sales for each store, with each store location represented by a distinct color.
+* **Sales Trend Over Time:** Line chart showing the weekly sales trend.
+* **Total Sales by Category:** Bar chart showing the total sales for each product category.
+* **Top 2 Sales by Region:** Grouped bar chart showing the top 2 selling product categories for each region.
 
--   **Data Analysis:** Analyzes EC2 cost data to provide insights into costs, instance usage, and potential savings.
--   **Visualization:** Generates visualizations using Matplotlib and Seaborn to display analysis results.
--   **AWS S3 Integration:** Stores and retrieves analysis results and visualizations from an AWS S3 bucket.
--   **Web Interface:** Provides a simple web interface for running the analysis and downloading results.
--   **Password Protection:** Basic password protection for accessing the application.
+The visualizations and analysis are generated from simulated sales data and uploaded to an AWS S3 bucket for web display.
 
 ## Prerequisites
 
--   Python 3.6+
--   AWS account with configured credentials
--   `ec2_data.csv` file containing EC2 cost data
+* Python 3.x
+* AWS account with S3 access
+* Boto3 library (`pip install boto3`)
+* Pandas library (`pip install pandas`)
+* Matplotlib library (`pip install matplotlib`)
+* Seaborn library (`pip install seaborn`)
+* Flask library (`pip install Flask`)
+* Schedule library (`pip install schedule`)
 
-## Installation
+## Setup
 
-1.  **Clone the repository:**
+1.  **AWS Configuration:**
+    * Create an S3 bucket (e.g., `kroger-sales-analysis-web`).
+    * Ensure your AWS credentials are configured correctly (e.g., via environment variables or AWS CLI).
+    * Enable static website hosting for the S3 bucket.
+    * Update the following variables in the code:
+        * `S3_BUCKET_NAME`: Your S3 bucket name.
+        * `S3_REGION`: Your AWS region.
 
+2.  **Python Libraries:**
+    * Install the required Python libraries using pip:
+        ```bash
+        pip install boto3 pandas matplotlib seaborn Flask schedule
+        ```
+
+3.  **Code Configuration:**
+    * Optionally, modify the `generate_specific_store_data` function to customize the simulated sales data.
+    * Set the `PASSWORD_HASH` and `SALT` variables if you want to implement basic password protection.
+
+## Running the Code
+
+1.  Execute the Python script:
     ```bash
-    git clone <repository_url>
-    cd <repository_directory>
+    python your_script_name.py
     ```
 
-2.  **Create a virtual environment (recommended):**
+2.  The script will:
+    * Generate simulated sales data.
+    * Analyze the sales data.
+    * Create the visualizations.
+    * Generate an HTML file (`index.html`) containing the visualizations.
+    * Upload the visualizations and HTML file to the specified S3 bucket.
+    * Print the S3 website URL to the console.
 
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On macOS/Linux
-    venv\Scripts\activate  # On Windows
-    ```
+3.  The script is scheduled to run every 6 hours. You can modify the scheduling frequency by changing the `schedule.every(6).hours.do(scheduled_task)` line.
 
-3.  **Install dependencies:**
+4.  Access the dashboard by opening the S3 website URL in your web browser.
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+## Code Structure
 
-4.  **Configure AWS Credentials:**
-
-    Ensure you have configured your AWS credentials either through environment variables or the AWS CLI.
-
-5.  **Place your `ec2_data.csv` file in the same directory as `app.py`.**
-
-6.  **Set the password:**
-
-    Modify the `PASSWORD_HASH` and `SALT` variables in `app.py` with your desired password.
-
-    ```python
-    import hashlib
-    import secrets
-
-    PASSWORD_HASH = hashlib.sha256("your_strong_password".encode()).hexdigest()
-    SALT = secrets.token_hex(16)
-    PASSWORD_HASH = hashlib.sha256((PASSWORD_HASH + SALT).encode()).hexdigest()
-    ```
-
-## Usage
-
-1.  **Run the Flask application:**
-
-    ```bash
-    python app.py
-    ```
-
-2.  **Access the application in your web browser:**
-
-    Open your browser and navigate to `http://127.0.0.1:5000/`.
-
-3.  **Login:**
-
-    Enter the password you set in `app.py`.
-
-4.  **Run the analysis:**
-
-    Click the link or navigate to `http://127.0.0.1:5000/run_analysis` to start the analysis.
-
-5.  **Download results:**
-
-    Click the download link or navigate to `http://127.0.0.1:5000/download` to download the analysis results as a CSV file.
-
-6.  **View visualizations:**
-
-    The visualizations will be uploaded to the S3 bucket. You can access them through the web interface (if implemented) or directly from your S3 bucket.
-
-## AWS S3 Configuration
-
--   The application creates an S3 bucket named `alexas-ec2-cost-analysis-bucket` in the `us-east-1` region (or the specified region).
--   The analysis results are stored in the bucket as `ec2_analysis.csv`.
--   Visualizations are stored in the `visualizations/` folder within the bucket.
-
-## Dependencies
-
--   Flask
--   Pandas
--   Matplotlib
--   Seaborn
--   Boto3
--   Requests
+* `generate_specific_store_data(num_days=90)`: Generates simulated sales data for Kroger stores.
+* `read_kroger_sales_data(csv_file)`: Reads sales data from a CSV file.
+* `analyze_kroger_sales(df)`: Analyzes the sales data and returns analysis results.
+* `generate_kroger_sales_visualizations(df)`: Generates the sales analysis visualizations.
+* `generate_static_html(analysis_results)`: Generates the HTML content for the dashboard.
+* `upload_static_html_to_s3()`: Uploads the HTML file to S3.
+* `process_and_upload()`: Orchestrates the data generation, analysis, visualization, and upload process.
+* `scheduled_task()`: Runs the `process_and_upload()` function and prints the website URL.
+* `print_website_url()`: Prints the S3 website URL to the console.
+* `upload_to_s3(filename, s3_filename)`: Uploads a file to S3.
 
 ## Notes
 
--   Ensure your AWS credentials have the necessary permissions to create and access S3 buckets.
--   The application uses basic password protection. For production environments, consider using more robust authentication and authorization mechanisms.
--   The application assumes the `ec2_data.csv` file has specific column names. If your data has different column names, you may need to modify the analysis functions.
--   The visualisations are saved to the local directory, and then uploaded to S3. They are not served directly from the local machine.
+* This project uses simulated sales data. For real-world applications, you would replace the data generation with actual sales data from a database or other source.
+* The visualizations are saved as PNG files and uploaded to S3.
+* The HTML dashboard is generated dynamically and uploaded to S3.
+* The script is scheduled to run periodically using the `schedule` library.
+* Basic error handling and logging are included.
 
-## Contributing
+## Future Improvements
 
-Contributions are welcome! Please feel free to submit pull requests or open issues for bugs or feature requests.
-
-## License
-
-This project is licensed under the MIT License.
+* Implement user authentication for the dashboard.
+* Add more interactive visualizations using JavaScript libraries.
+* Allow users to filter and customize the visualizations.
+* Integrate with a real-time data source.
+* Add more detailed analysis and metrics.
+* Deploy the application using a serverless architecture (e.g., AWS Lambda and API Gateway).
