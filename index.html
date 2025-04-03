@@ -1,0 +1,106 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Kroger Sales Analysis</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                margin: 20px;
+            }
+            h1 {
+                text-align: center;
+            }
+            .section {
+                margin-bottom: 20px;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+            .number {
+                text-align: right;
+            }
+            .bar-chart {
+                width: 80%;
+                margin: 20px auto;
+            }
+            .bar-chart img {
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Kroger Sales Analysis (Last 90 Days)</h1>
+
+        <div class="section">
+            <h2>Total Sales</h2>
+            <p><b>$73,251,850.04</b></p>
+        </div>
+
+        <div class="section">
+            <h2>Average Sales per Store</h2>
+            <table>
+                <tr>
+                    <th>Store</th>
+                    <th class="number">Average Sales (USD)</th>
+                </tr>
+                <tr><td>Chicago_Store_2</td><td class="number">1,719.09</td></tr><tr><td>Chicago_Store_4</td><td class="number">1,713.06</td></tr><tr><td>Dallas_Store_2</td><td class="number">1,738.42</td></tr><tr><td>Houston_Store_3</td><td class="number">1,594.25</td></tr><tr><td>Los Angeles_Store_1</td><td class="number">1,940.63</td></tr><tr><td>Los Angeles_Store_4</td><td class="number">1,920.41</td></tr><tr><td>New York_Store_4</td><td class="number">1,935.38</td></tr><tr><td>New York_Store_5</td><td class="number">1,901.12</td></tr><tr><td>Philadelphia_Store_3</td><td class="number">1,589.61</td></tr><tr><td>Philadelphia_Store_4</td><td class="number">1,578.49</td></tr><tr><td>Phoenix_Store_2</td><td class="number">1,583.78</td></tr><tr><td>San Antonio_Store_1</td><td class="number">1,595.42</td></tr><tr><td>San Antonio_Store_5</td><td class="number">1,581.83</td></tr><tr><td>San Diego_Store_2</td><td class="number">1,634.71</td></tr><tr><td>San Diego_Store_3</td><td class="number">1,676.06</td></tr><tr><td>San Jose_Store_2</td><td class="number">1,651.65</td></tr><tr><td>San Jose_Store_5</td><td class="number">1,642.55</td></tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Total Fuel Sales</h2>
+            <p><b>23,227,891</b></p>
+        </div>
+
+        <div class="section">
+            <h2>Average Fuel Price</h2>
+            <p><b>$4.11</b></p>
+        </div>
+
+        <div class="section">
+            <h2>Total Gallons Sold</h2>
+            <p><b>5,419,187</b></p>
+        </div>
+
+        <div class="section">
+            <div class="bar-chart">
+                <h2>Average Sales Amount per Store</h2>
+                <img src="kroger_sales_visualizations/sales_by_store.png" alt="Average Sales Amount per Store">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="bar-chart">
+                <h2>Sales Trend Over Time</h2>
+                <img src="kroger_sales_visualizations/sales_trend.png" alt="Sales Trend Over Time">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="bar-chart">
+                <h2>Total Sales by Category</h2>
+                <img src="kroger_sales_visualizations/sales_by_category.png" alt="Total Sales by Category">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="bar-chart">
+                <h2>Top 2 Sales by Region</h2>
+                <img src="kroger_sales_visualizations/sales_by_region.png" alt="Top 2 Sales by Region">
+            </div>
+        </div>
+
+    </body>
+    </html>
+    

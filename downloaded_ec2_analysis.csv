@@ -1,0 +1,16 @@
+Metric,Value
+total_ec2_running,"100,000.00"
+total_ec2_not_running,0.00
+total_cost_running,"$25,550,996.33"
+Total Cost Per Region (us-east-2b),"$5,179,142.94"
+Total Cost Per Region (us-west-2b),"$5,155,883.42"
+Total Cost Per Region (us-west-1a),"$5,095,250.13"
+Total Cost Per Region (us-east-1a),"$5,080,712.32"
+Total Cost Per Region (us-east-1c),"$5,040,007.52"
+low_utilization_percentage,38.82%
+high_utilization_percentage,0.00%
+Recommendation Breakdown (No Action),"61,181.00"
+Recommendation Breakdown (Downsize),"20,441.00"
+Recommendation Breakdown (Stop),"18,378.00"
+total_cost_with_savings,"$18,713,229.95"
+potential_savings_percentage,26.76%
