@@ -1,90 +1,107 @@
-# Kroger Sales Analysis Dashboard
+# Terraform FinOps Automation
 
-This project generates and displays sales analysis visualizations for Kroger stores, including:
-
-* **Average Sales Amount per Store:** Bar chart showing the average sales for each store, with each store location represented by a distinct color.
-* **Sales Trend Over Time:** Line chart showing the weekly sales trend.
-* **Total Sales by Category:** Bar chart showing the total sales for each product category.
-* **Top 2 Sales by Region:** Grouped bar chart showing the top 2 selling product categories for each region.
-
-The visualizations and analysis are generated from simulated sales data and uploaded to an AWS S3 bucket for web display.
+This project automates the provisioning of an AWS S3 bucket using Terraform and integrates cost analysis using the AWS Cost Explorer API. It includes a Python script that orchestrates the Terraform workflow and retrieves cost data.
 
 ## Prerequisites
 
-* Python 3.x
-* AWS account with S3 access
-* Boto3 library (`pip install boto3`)
-* Pandas library (`pip install pandas`)
-* Matplotlib library (`pip install matplotlib`)
-* Seaborn library (`pip install seaborn`)
-* Flask library (`pip install Flask`)
-* Schedule library (`pip install schedule`)
+* **Terraform:** Install Terraform from [terraform.io](https://www.terraform.io/downloads.html).
+* **Python 3:** Ensure you have Python 3 installed.
+* **AWS CLI and Boto3:** Install the AWS CLI and Boto3 library:
+    ```bash
+    pip install awscli boto3
+    ```
+* **AWS Credentials:** Configure your AWS credentials using the AWS CLI or environment variables. Ensure the specified AWS profile in the script has the necessary permissions.
 
-## Setup
+## Project Structure
 
-1.  **AWS Configuration:**
-    * Create an S3 bucket (e.g., `kroger-sales-analysis-web`).
-    * Ensure your AWS credentials are configured correctly (e.g., via environment variables or AWS CLI).
-    * Enable static website hosting for the S3 bucket.
-    * Update the following variables in the code:
-        * `S3_BUCKET_NAME`: Your S3 bucket name.
-        * `S3_REGION`: Your AWS region.
+Markdown
 
-2.  **Python Libraries:**
-    * Install the required Python libraries using pip:
-        ```bash
-        pip install boto3 pandas matplotlib seaborn Flask schedule
+# Terraform FinOps Automation
+
+This project automates the provisioning of an AWS S3 bucket using Terraform and integrates cost analysis using the AWS Cost Explorer API. It includes a Python script that orchestrates the Terraform workflow and retrieves cost data.
+
+## Prerequisites
+
+* **Terraform:** Install Terraform from [terraform.io](https://www.terraform.io/downloads.html).
+* **Python 3:** Ensure you have Python 3 installed.
+* **AWS CLI and Boto3:** Install the AWS CLI and Boto3 library:
+    ```bash
+    pip install awscli boto3
+    ```
+* **AWS Credentials:** Configure your AWS credentials using the AWS CLI or environment variables. Ensure the specified AWS profile in the script has the necessary permissions.
+
+## Project Structure
+
+terraform_finops_automation/
+├── main.tf             # Terraform configuration for S3 bucket
+├── terraform.tfvars    # Terraform variable definitions
+├── terraform_finops_1.py # Python script for automation
+└── README.md           # This file
+
+## Setup and Usage
+
+1.  **Configure Terraform Variables:**
+    * Edit the `terraform.tfvars` file to set your desired AWS region and any other variables.
+    * Example `terraform.tfvars`:
+
+        ```terraform
+        aws_region = "us-east-1"
         ```
 
-3.  **Code Configuration:**
-    * Optionally, modify the `generate_specific_store_data` function to customize the simulated sales data.
-    * Set the `PASSWORD_HASH` and `SALT` variables if you want to implement basic password protection.
+2.  **Configure AWS Profile:**
+    * Ensure that the `aws_profile_name` variable in the python script, matches an aws profile in your aws credentials file.
 
-## Running the Code
+3.  **Run the Python Script:**
+    * Execute the Python script to automate the process:
 
-1.  Execute the Python script:
-    ```bash
-    python your_script_name.py
-    ```
+        ```bash
+        python terraform_finops_1.py
+        ```
 
-2.  The script will:
-    * Generate simulated sales data.
-    * Analyze the sales data.
-    * Create the visualizations.
-    * Generate an HTML file (`index.html`) containing the visualizations.
-    * Upload the visualizations and HTML file to the specified S3 bucket.
-    * Print the S3 website URL to the console.
+    * The script will:
+        * Initialize the Terraform project.
+        * Generate a Terraform execution plan.
+        * Display the estimated cost using AWS Cost Explorer.
+        * Apply the Terraform plan to create the S3 bucket.
+        * Output the S3 bucket ARN.
 
-3.  The script is scheduled to run every 6 hours. You can modify the scheduling frequency by changing the `schedule.every(6).hours.do(scheduled_task)` line.
+## Terraform Configuration (`main.tf`)
 
-4.  Access the dashboard by opening the S3 website URL in your web browser.
+This file defines the AWS S3 bucket resource.
 
-## Code Structure
+```terraform
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "my-unique-bucket-name-generated-by-python" #Ensure this name is globally unique
+}
 
-* `generate_specific_store_data(num_days=90)`: Generates simulated sales data for Kroger stores.
-* `read_kroger_sales_data(csv_file)`: Reads sales data from a CSV file.
-* `analyze_kroger_sales(df)`: Analyzes the sales data and returns analysis results.
-* `generate_kroger_sales_visualizations(df)`: Generates the sales analysis visualizations.
-* `generate_static_html(analysis_results)`: Generates the HTML content for the dashboard.
-* `upload_static_html_to_s3()`: Uploads the HTML file to S3.
-* `process_and_upload()`: Orchestrates the data generation, analysis, visualization, and upload process.
-* `scheduled_task()`: Runs the `process_and_upload()` function and prints the website URL.
-* `print_website_url()`: Prints the S3 website URL to the console.
-* `upload_to_s3(filename, s3_filename)`: Uploads a file to S3.
+resource "aws_s3_bucket_acl" "example_bucket_acl" {
+  bucket = aws_s3_bucket.example_bucket.id
+  acl    = "private"
+}
 
-## Notes
+output "s3_bucket_arn" {
+  value = aws_s3_bucket.example_bucket.arn
+}
+Python Script (terraform_finops_1.py)
+This script automates the Terraform workflow and retrieves cost data.
 
-* This project uses simulated sales data. For real-world applications, you would replace the data generation with actual sales data from a database or other source.
-* The visualizations are saved as PNG files and uploaded to S3.
-* The HTML dashboard is generated dynamically and uploaded to S3.
-* The script is scheduled to run periodically using the `schedule` library.
-* Basic error handling and logging are included.
+Python
 
-## Future Improvements
+import os
+import json
+import subprocess
+import boto3
+from datetime import datetime, timedelta
 
-* Implement user authentication for the dashboard.
-* Add more interactive visualizations using JavaScript libraries.
-* Allow users to filter and customize the visualizations.
-* Integrate with a real-time data source.
-* Add more detailed analysis and metrics.
-* Deploy the application using a serverless architecture (e.g., AWS Lambda and API Gateway).
+# ... (Functions for Terraform commands and cost analysis)
+
+def main():
+    terraform_directory = "YOUR_TERRAFORM_DIRECTORY" #Change this to your terraform directory.
+    var_file_path = "YOUR_TERRAFORM_VAR_FILE" #Change this to your terraform var file.
+    aws_profile_name = "YOUR_AWS_PROFILE_NAME" #Change this to your aws profile name.
+
+    # ... (Terraform and cost analysis workflow)
+
+if __name__ == "__main__":
+    main()
+
