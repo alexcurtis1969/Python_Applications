@@ -1,0 +1,33 @@
+---
+- hosts: localhost
+  vars:
+    python_script: /home/alexa/ansible_project/finops_report.py
+    output_pdf: /home/alexa/ansible_project/FinOps_Report.pdf
+    s3_bucket: your-finops-report-bucket  # Replace with your S3 bucket name
+    s3_report_key: FinOps_Report.pdf      # Key for the report in S3 (root)
+    website_dir: /home/alexa/ansible_project/website # Local directory with website files
+
+  tasks:
+    - name: Execute the FinOps Report Python script
+      command:
+        cmd: "python3 {{ python_script }}"
+      register: script_output
+
+    - name: Print the script's output (optional)
+      debug:
+        var: script_output.stdout_lines
+
+    - name: Upload FinOps Report to S3
+      amazon.aws.aws_s3:
+        bucket: "{{ s3_bucket }}"
+        key: "{{ s3_report_key }}"
+        src: "{{ output_pdf }}"
+        overwrite: yes
+      when: script_output.rc == 0
+
+    - name: Upload website files (index.html, etc.) to S3
+      synchronize:
+        dest: "s3://{{ s3_bucket }}/"
+        src: "{{ website_dir }}/"
+        delete: yes  # Remove files in S3 that are not in the local directory
+      delegate_to: localhost
